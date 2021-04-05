@@ -1,44 +1,56 @@
 import web
 import json
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
+
 urls = (
-    '/personas?', 'Personas'
+    '/datos?', 'Parametros'
 )
 app = web.application(urls, globals())
 
-class Personas:
+class Parametros:
+  json_file = {}
+  
+  def GET(self):
+      parametros = web.input()
+      action = parametros.action
+      if action == "get":
+        return self.read()
+      elif action == "put":
+        nombre = parametros.nombre
+        fecha_naci = parametros.fecha_naci
+        return self.write(nombre, fecha_naci)
+  
+  def write (self, nombre,fecha_naci):
+    try:
+      fecha_nacimiento = datetime.strptime(fecha_naci, "%d-%m-%Y") #//fecha
+      edad = relativedelta(datetime.now(), fecha_nacimiento) #Almacene valores en edad
+      edad = (f"{edad.years} years.")
+      datos = {
+      "nombre" : nombre,
+      "fecha_naci" : fecha_naci,
+      "edad" : edad
+      }
+      try:
+        with open("datos.json") as file:
+          self.json_file = json.load(file)
+          self.json_file["datospersona"].append(datos)
+          with open("datos.json","w") as file:
+            json.dump(self.json_file, file)
+            return json.dumps(datos)
 
-
-    def __init__(self):
-      pass
-        
-     
-    def GET(self):
-        try:
-            parametros = web.input() 
-            nombre = parametros.nombre
-            dia = int(parametros.dia)
-            mes = parametros.mes
-            año_nac = int(parametros.año_nac)
-            edad = 2021 - año_nac
-            data={}
-            data["Nombre"] = nombre
-            data["Día"] = dia
-            data["Mes"] = mes
-            data["Año de nacimiento"] = año_nac
-            data["Edad"] = edad
-            archivo = open("static/","a")
-            archivo.write("\n")
-            archivo.write(str(data))
-            archivo.close()
-            return json.dumps(data)
-
-        except:
-          data = {}
-          data["mensaje"] = "Revisa tus datos ingresados"
-          return json.dumps(data)
-       
+      except  Exception as error:
+        print("Error {}".format(error.args[0]))
             
+    except  Exception as error:
+      print("Error {}".format(error.args[0]))
+  
+
+  def read(self):
+        with open("datos.json") as file:
+            self.json_file = json.load(file)
+            return json.dumps(self.json_file)
+        
 
 if __name__ == "__main__":
-  app.run()
-
+    app.run()

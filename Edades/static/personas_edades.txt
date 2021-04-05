@@ -1,4 +1,0 @@
-{'Nombre': 'Brandon', 'Día': 29, 'Mes': 'noviembre', 'Ano de nacimiento': 1998, 'Edad': 23}
-{'Nombre': 'Antonio', 'Día': 22, 'Mes': 'Febrero', 'Ano de nacimiento': 1995, 'Edad': 26}
-{'Nombre': 'Brandon', 'Día': 29, 'Mes': 'noviembre', 'Ano de nacimiento': 1998, 'Edad': 23}
-{'Nombre': 'Brandon', 'Día': 29, 'Mes': 'noviembre', 'Año de nacimiento': 1998, 'Edad': 23}
