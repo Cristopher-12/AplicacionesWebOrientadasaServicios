@@ -23,7 +23,7 @@ class Index():
     title = "Título: "+(decoded[0]["volumeInfo"]["title"]) #titulo del libro
     try:
       for j in range (len(decoded[0]["volumeInfo"]["authors"])):
-        author = "Autor(es): "+(decoded[0]["volumeInfo"]["authors"][j]) #autor
+        author = "Autor: "+(decoded[0]["volumeInfo"]["authors"][j]) #autor
     except Exception as error:
       author = "No hay autor disponible."
     try:
@@ -34,7 +34,7 @@ class Index():
     titulo = "<h1 class='text-center'>"+title+"<h1>"
     autor = "<h2 class='text-center'>"+author+"<h2>"
     imagen = "<img src=\""+image+"\"  align='center' width='300' height='350'>"
-    link ="<a target='blank' class='text-center text-danger' href='"+url+"'>Visualizar en Google Books</a>"
+    link ="<a target='blank' class='text-center text-normal' href='"+url+"'>Visualizar en Google Books</a>"
 
     datos = {
       "titulo": titulo,
